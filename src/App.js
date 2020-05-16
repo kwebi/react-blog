@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {adminRoutes} from './routes'
+import {Switch, Route, Redirect} from "react-router-dom";
+import {Frame} from "./components";
+import {connect} from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const menus = adminRoutes.filter(route => route.isNav === true)
+
+const mapState = state=>({
+    isLogin: state.user.isLogin
+})
+
+class App extends React.Component {
+    render() {
+        return ( this.props.isLogin ? (
+            <Frame menus={menus}>
+                <Switch>
+                    {
+                        adminRoutes.map(route => {
+                                return <Route key={route.pathname} path={route.pathname} render={(routerProps) => {
+                                    return <route.component {...routerProps} />
+                                }} exact={route.exact}></Route>
+                            }
+                        )
+                    }
+                    <Redirect to={adminRoutes[0].pathname} from="/admin" exact></Redirect>
+                    <Redirect to='/404'></Redirect>
+                </Switch>
+            </Frame>
+
+        ): (<Redirect to="/login" />))
+    }
 }
 
-export default App;
+export default connect(mapState)(App);
