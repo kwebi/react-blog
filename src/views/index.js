@@ -3,7 +3,7 @@ import Loadable from 'react-loadable'
 import {Loading} from "../components";
 
 const Dashboard = Loadable({
-    loader: ()=> import('./Dashboard'),
+    loader: ()=> import('./admin/Dashboard'),
     loading: Loading
 })
 
@@ -17,23 +17,31 @@ const NotFound = Loadable({
     loading: Loading
 })
 const Settings = Loadable({
-    loader: ()=> import('./Settings'),
+    loader: ()=> import('./admin/Settings'),
     loading: Loading
 })
 const ArticleList = Loadable({
-    loader: ()=> import('./Article/index'),
+    loader: ()=> import('./admin/Article/index'),
     loading: Loading
 })
 const ArticleEdit = Loadable({
-    loader: ()=> import('./Article/Edit'),
+    loader: ()=> import('./admin/Article/Edit'),
     loading: Loading
 })
 const Notifications = Loadable({
-    loader: ()=> import('./Notifications'),
+    loader: ()=> import('./admin/Notifications'),
     loading: Loading
 })
 const NoAuth = Loadable({
-    loader:()=>import('./NoAuth'),
+    loader:()=>import('./admin/NoAuth'),
+    loading: Loading
+})
+const Article = Loadable({
+    loader:()=>import('./web/Article'),
+    loading: Loading
+})
+const WebArticleList = Loadable({
+    loader:()=>import('./web/WebArticleList'),
     loading: Loading
 })
 
@@ -45,5 +53,7 @@ export {
     ArticleList,
     ArticleEdit,
     Notifications,
-    NoAuth
+    NoAuth,
+    Article,
+    WebArticleList
 }

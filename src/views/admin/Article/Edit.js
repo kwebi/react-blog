@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Button, Card, Form, Input, DatePicker, Spin,message} from "antd"
 import SimpleMDEEditor from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import {getArticleById, saveArticle} from '../../requests'
+import {getArticleById, saveArticle} from '../../../requests'
 import moment from 'moment'
 
 const formItemLayout = {
@@ -32,9 +32,9 @@ class ArticleEdit extends Component {
                 this.setState({
                     isLoading: true
                 })
-                saveArticle(this.props.match.params.id, data).then(resp=>{
+                saveArticle(this.props.match.params.id, data).then(resp => {
                     message.success(resp.msg)
-                }).finally(()=>{
+                }).finally(() => {
                     this.setState({
                         isLoading: false
                     })
@@ -59,7 +59,7 @@ class ArticleEdit extends Component {
         this.setState({
             isLoading: true
         })
-        this.getArticle(this.props.match.params.id).finally(()=>{
+        this.getArticle(this.props.match.params.id).finally(() => {
             this.setState({
                 isLoading: false
             })
@@ -104,7 +104,7 @@ class ArticleEdit extends Component {
                             {getFieldDecorator('content', {
                                 rules: [{required: true, message: '内容必填'}],
                             })(
-                                <SimpleMDEEditor></SimpleMDEEditor>
+                                <SimpleMDEEditor />
                             )}
                         </Form.Item>
                         <Form.Item wrapperCol={{offset: 3}}>

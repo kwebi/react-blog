@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Card, Button, List, Avatar, Icon, Badge,Spin} from "antd";
 import {connect} from "react-redux";
-import {markNotificationsAsReadById, markAllNotificationsAsRead} from "../../redux/actions/notifications";
+import {markNotificationsAsReadById, markAllNotificationsAsRead} from "../../../redux/actions/notifications";
 
 const mapState = state => {
     const {list, isLoading} = state.notifications

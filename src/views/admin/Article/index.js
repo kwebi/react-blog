@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Button, Table, Tag, Modal, Typography, message} from "antd";
-import { deleteArticleById, getArticles} from "../../requests";
+import {deleteArticleById, getArticles} from "../../../requests";
 import moment from "moment";
 
 const titleDisplayMap = {
@@ -17,10 +17,8 @@ class ArticleList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: [
-            ],
-            columns: [
-            ],
+            dataSource: [],
+            columns: [],
             total: 0,
             isLoading: false,
             offset: 0,
@@ -28,23 +26,23 @@ class ArticleList extends Component {
         }
     }
 
-    createColumns = (columnsKeys)=>{
+    createColumns = (columnsKeys) => {
         const columns = columnsKeys.map(item => {
-            if(item==='amount'){
+            if (item === 'amount') {
                 return {
                     title: titleDisplayMap[item],
                     key: item,
-                    render: (text, record, index)=>{
+                    render: (text, record, index) => {
                         const {amount} = record
-                        return <Tag color={amount>200?'green':'blue'}>{amount}</Tag>
+                        return <Tag color={amount > 200 ? 'green' : 'blue'}>{amount}</Tag>
                     }
                 }
             }
-            if(item==='createAt'){
+            if (item === 'createAt') {
                 return {
                     title: titleDisplayMap[item],
                     key: item,
-                    render: (text, record, index)=>{
+                    render: (text, record, index) => {
                         const {createAt} = record
                         return moment(createAt).format('YYYY年MM月DD日 HH:mm')
                     }
@@ -57,15 +55,15 @@ class ArticleList extends Component {
             }
         })
         columns.push({
-            title:'操作',
+            title: '操作',
             key: 'action',
-            render:(text, record, index)=>{
+            render: (text, record, index) => {
                 return (
                     <ButtonGroup>
-                        <Button size="small" type="default" onClick={()=>{
+                        <Button size="small" type="default" onClick={() => {
                             this.toEdit(record)
                         }}>编辑</Button>
-                        <Button size="small" type="danger" onClick={()=>{
+                        <Button size="small" type="danger" onClick={() => {
                             this.deleteArticle(record)
                         }}>删除</Button>
                     </ButtonGroup>
@@ -75,21 +73,21 @@ class ArticleList extends Component {
         return columns
     }
 
-    deleteArticle=(record)=>{
+    deleteArticle = (record) => {
         Modal.confirm({
             title: <Typography>确定删除{record.title}吗</Typography>,
             content: `操作不可逆，谨慎删除`,
             okText: `删除`,
-            onOk:()=>{
+            onOk: () => {
                 //通过返回Promise达到等待直到操作成功
-                return deleteArticleById(record.id).then(resp=>{
+                return deleteArticleById(record.id).then(resp => {
                     message.success(resp.msg)
                     this.getData()
                 })
             }
         })
     }
-    toEdit=(record)=>{
+    toEdit = (record) => {
         this.props.history.push({
             pathname: `/admin/article/edit/${record.id}`
         })
@@ -99,7 +97,7 @@ class ArticleList extends Component {
         this.setState({
             isLoading: true
         })
-        getArticles(this.state.offset,this.state.limited).then(resp => {
+        getArticles(this.state.offset, this.state.limited).then(resp => {
             const columnsKeys = Object.keys(resp.list[0])
             const columns = this.createColumns(columnsKeys)
             this.setState({
@@ -107,7 +105,8 @@ class ArticleList extends Component {
                 dataSource: resp.list,
                 columns,
             })
-        }).catch(err=>{}).finally(()=>{
+        }).catch(err => {
+        }).finally(() => {
             this.setState({
                 isLoading: false
             })
@@ -118,21 +117,21 @@ class ArticleList extends Component {
         this.getData()
     }
 
-    onPageChange = (page,pageSize)=>{
+    onPageChange = (page, pageSize) => {
         this.setState({
             limited: pageSize,
-            offset: (page-1)*pageSize
-        },()=>{
+            offset: (page - 1) * pageSize
+        }, () => {
             this.getData()
         })
     }
 
-    onShowSizeChange=(current, size)=>{
-        console.log(current,size)
+    onShowSizeChange = (current, size) => {
+        console.log(current, size)
         this.setState({
             limited: size,
             offset: 0
-        },()=>{
+        }, () => {
             this.getData()
         })
     }
@@ -140,17 +139,17 @@ class ArticleList extends Component {
     render() {
         return (
             <Card title="文章列表" bordered={false}
-                  extra={<Button >导出</Button>}>
+                  extra={<Button>导出</Button>}>
                 <Table dataSource={this.state.dataSource}
                        columns={this.state.columns}
                        pagination={{
-                           current: (this.state.offset/this.state.limited+1),
+                           current: (this.state.offset / this.state.limited + 1),
                            total: this.state.total,
                            onChange: this.onPageChange,
                            showSizeChanger: true,
                            showQuickJumper: true,
                            onShowSizeChange: this.onShowSizeChange,
-                           pageSizeOptions:['5','10','20','40']
+                           pageSizeOptions: ['5', '10', '20', '40']
                        }}
                        rowKey={record => record.id}
                        loading={this.state.isLoading}

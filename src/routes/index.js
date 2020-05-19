@@ -5,10 +5,25 @@ import {
     Settings,
     ArticleList,
     ArticleEdit,
-    Notifications
+    Notifications,
+    NoAuth,
+    Article,
+    WebArticleList
 } from '../views'
 
 export const mainRoutes = [
+    {
+        pathname: '/article/:id',
+        component: Article
+    },
+    {
+        pathname: '/article',
+        component: WebArticleList,
+        exact: true
+    }
+]
+
+export const otherRoutes = [
     {
         pathname: '/login',
         component: Login
@@ -16,7 +31,7 @@ export const mainRoutes = [
     {
         pathname: '/404',
         component: NotFound
-    }
+    },
 ]
 
 export const adminRoutes = [
@@ -53,5 +68,9 @@ export const adminRoutes = [
         pathname: '/admin/notifications',
         component: Notifications,
         isNav: false
+    },
+    {
+        pathname: '/admin/noauth',
+        component: NoAuth
     }
 ]
