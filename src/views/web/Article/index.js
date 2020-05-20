@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Icon} from "antd";
+import moment from "moment";
 import {getArticleById} from "../../../requests";
 import '../index.less'
 import './article.less'
@@ -24,6 +25,7 @@ class Article extends Component {
     componentDidMount() {
         this.getArticle(this.props.match.params).then(resp=>{
             console.log(resp)
+            resp.createAt = moment(resp.createAt).format("YYYY年MM月DD日 hh:mm")
             this.setState({
                 article: resp
             })
@@ -31,6 +33,7 @@ class Article extends Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div className="article-content">
                 <div>

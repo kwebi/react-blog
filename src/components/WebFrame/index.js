@@ -6,7 +6,7 @@ import WebHeader from "./Header";
 import WebFooter from "./Footer";
 import SideBar from "./SideBar";
 
-const { Header, Footer, Content } = Layout;
+const { Content } = Layout;
 
 // 响应式
 const responsiveRight = { lg: {span:6,offset: 1},md:0, sm: 0, xs: 0 }
