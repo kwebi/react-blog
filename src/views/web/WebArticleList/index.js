@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {getArticles} from "../../../requests";
+import React, { Component } from 'react';
+import { getArticles } from "../../../requests";
 import moment from "moment";
 import Outline from "./Outline";
 
@@ -11,7 +11,7 @@ class WebArticleList extends Component {
             total: 0,
             isLoading: false,
             offset: 0,
-            limited: 6
+            limit: 6
         }
     }
 
@@ -19,7 +19,7 @@ class WebArticleList extends Component {
         this.setState({
             isLoading: true
         })
-        getArticles(this.state.offset, this.state.limited).then(resp => {
+        getArticles(this.state.offset, this.state.limit).then(resp => {
             this.setState({
                 dataSource: resp.list,
                 total: resp.total

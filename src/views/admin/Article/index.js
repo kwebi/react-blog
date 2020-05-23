@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {Card, Button, Table, Tag, Modal, Typography, message} from "antd";
-import {deleteArticleById, getArticles} from "../../../requests";
+import React, { Component } from 'react';
+import { Card, Button, Table, Tag, Modal, Typography, message } from "antd";
+import { deleteArticleById, getArticles } from "../../../requests";
+import { Link } from "react-router-dom"
 import moment from "moment";
 
 const titleDisplayMap = {
@@ -33,7 +34,7 @@ class ArticleList extends Component {
                     title: titleDisplayMap[item],
                     key: item,
                     render: (text, record, index) => {
-                        const {amount} = record
+                        const { amount } = record
                         return <Tag color={amount > 200 ? 'green' : 'blue'}>{amount}</Tag>
                     }
                 }
@@ -43,7 +44,7 @@ class ArticleList extends Component {
                     title: titleDisplayMap[item],
                     key: item,
                     render: (text, record, index) => {
-                        const {createAt} = record
+                        const { createAt } = record
                         return moment(createAt).format('YYYY年MM月DD日 HH:mm')
                     }
                 }
@@ -139,20 +140,20 @@ class ArticleList extends Component {
     render() {
         return (
             <Card title="文章列表" bordered={false}
-                  extra={<Button>导出</Button>}>
+                extra={<Button><Link to="/admin/article/add">新建文章</Link></Button>}>
                 <Table dataSource={this.state.dataSource}
-                       columns={this.state.columns}
-                       pagination={{
-                           current: (this.state.offset / this.state.limited + 1),
-                           total: this.state.total,
-                           onChange: this.onPageChange,
-                           showSizeChanger: true,
-                           showQuickJumper: true,
-                           onShowSizeChange: this.onShowSizeChange,
-                           pageSizeOptions: ['5', '10', '20', '40']
-                       }}
-                       rowKey={record => record.id}
-                       loading={this.state.isLoading}
+                    columns={this.state.columns}
+                    pagination={{
+                        current: (this.state.offset / this.state.limited + 1),
+                        total: this.state.total,
+                        onChange: this.onPageChange,
+                        showSizeChanger: true,
+                        showQuickJumper: true,
+                        onShowSizeChange: this.onShowSizeChange,
+                        pageSizeOptions: ['5', '10', '20', '40']
+                    }}
+                    rowKey={record => record.id}
+                    loading={this.state.isLoading}
                 />
             </Card>
         );

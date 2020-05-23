@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Button, Card, Form, Input, DatePicker, Spin,message} from "antd"
+import React, { Component } from 'react'
+import { Button, Card, Form, Input, DatePicker, Spin, message } from "antd"
 import SimpleMDEEditor from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import {getArticleById, saveArticle} from '../../../requests'
+import { getArticleById, saveArticle, createArticle } from '../../../requests'
 import moment from 'moment'
 
 const formItemLayout = {
@@ -32,14 +32,25 @@ class ArticleEdit extends Component {
                 this.setState({
                     isLoading: true
                 })
-                saveArticle(this.props.match.params.id, data).then(resp => {
-                    message.success(resp.msg)
-                }).finally(() => {
-                    this.setState({
-                        isLoading: false
+                if (!this.props.match.params.id) {
+                    createArticle(data).then(resp => {
+                        message.success(resp.msg)
+                    }).finally(() => {
+                        this.setState({
+                            isLoading: false
+                        })
+                        this.props.history.push('/admin/article')
                     })
-                    this.props.history.push('/admin/article')
-                })
+                } else {
+                    saveArticle(this.props.match.params.id, data).then(resp => {
+                        message.success(resp.msg)
+                    }).finally(() => {
+                        this.setState({
+                            isLoading: false
+                        })
+                        this.props.history.push('/admin/article')
+                    })
+                }
             }
         });
     }
@@ -48,7 +59,6 @@ class ArticleEdit extends Component {
         return getArticleById(id).then(resp => {
             this.props.form.setFieldsValue({
                 title: resp.title,
-                author: resp.author,
                 content: resp.content,
                 createAt: moment(resp.createAt)
             })
@@ -56,6 +66,7 @@ class ArticleEdit extends Component {
     }
 
     componentDidMount() {
+        if (this.props.match.params.id === undefined) return
         this.setState({
             isLoading: true
         })
@@ -69,45 +80,38 @@ class ArticleEdit extends Component {
 
 
     render() {
-        const {getFieldDecorator} = this.props.form
+        const { getFieldDecorator } = this.props.form
         return (
             <Card title='文章编辑' bordered={false}
-                  extra={<Button>取消</Button>}>
+                extra={<Button>取消</Button>}>
                 <Spin spinning={this.state.isLoading}>
                     <Form onSubmit={this.handleSubmit}
-                          {...formItemLayout}>
+                        {...formItemLayout}>
                         <Form.Item label="标题">
                             {getFieldDecorator('title', {
-                                rules: [{required: true, message: '标题必填'}],
-                            })(
-                                <Input
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item label="作者">
-                            {getFieldDecorator('author', {
-                                rules: [{required: true, message: '作者必填'}],
+                                rules: [{ required: true, message: '标题必填' }],
                             })(
                                 <Input
                                 />,
                             )}
                         </Form.Item>
 
+
                         <Form.Item label="时间">
                             {getFieldDecorator('createAt', {
-                                rules: [{required: true, message: '时间'}],
+                                rules: [{ required: true, message: '时间' }],
                             })(
-                                <DatePicker showTime placeholder="选择时间"/>
+                                <DatePicker showTime placeholder="选择时间" />
                             )}
                         </Form.Item>
                         <Form.Item label="内容">
                             {getFieldDecorator('content', {
-                                rules: [{required: true, message: '内容必填'}],
+                                rules: [{ required: true, message: '内容必填' }],
                             })(
                                 <SimpleMDEEditor />
                             )}
                         </Form.Item>
-                        <Form.Item wrapperCol={{offset: 3}}>
+                        <Form.Item wrapperCol={{ offset: 3 }}>
                             <Button type="primary" htmlType="submit">
                                 保存
                             </Button>
@@ -121,4 +125,4 @@ class ArticleEdit extends Component {
 }
 
 
-export default Form.create({name: 'normal_login'})(ArticleEdit)
+export default Form.create({ name: 'normal_login' })(ArticleEdit)

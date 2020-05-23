@@ -1,22 +1,22 @@
 import actionTypes from "./actionTypes";
-import {loginRequest} from "../../requests/index"
-import {removeLocal, removeSession, saveLocal, saveSession} from "../../utils/stroage";
+import { loginRequest } from "../../requests/index"
+import { removeLocal, removeSession, saveLocal, saveSession } from "../../utils/stroage";
 
-const startLogin=()=>{
+const startLogin = () => {
     return {
         type: actionTypes.START_LOGIN
     }
 }
 
-const loginSuccess=(userInfo)=>{
+const loginSuccess = (userInfo) => {
     return {
         type: actionTypes.LOGIN_SUCCESS,
-        payload:{
+        payload: {
             userInfo
         }
     }
 }
-const loginFailed=()=>{
+const loginFailed = () => {
     removeLocal('token')
     removeSession('token')
     removeLocal('userInfo')
@@ -26,34 +26,33 @@ const loginFailed=()=>{
     }
 }
 
-export const login=(userInfo)=>{
-    return dispatch=>{
+export const login = (userInfo) => {
+    return dispatch => {
         dispatch(startLogin())
-        loginRequest(userInfo).then(resp=>{
-
-            if(resp.data.code===200){
+        loginRequest(userInfo).then(resp => {
+            if (resp.data.code === 200) {
                 const {
                     token,
                     ...newUserInfo
                 } = resp.data.data
-                if(userInfo.remember===true) {
-                    saveLocal('token',token)
-                    saveLocal('userInfo',newUserInfo)
-                }else {
-                    saveSession('token',token)
-                    saveSession('userInfo',newUserInfo)
+                if (userInfo.remember === true) {
+                    saveLocal('token', token)
+                    saveLocal('userInfo', newUserInfo)
+                } else {
+                    saveSession('token', token)
+                    saveSession('userInfo', newUserInfo)
                 }
                 dispatch(loginSuccess(resp.data.data))
-            }else {
+            } else {
                 dispatch(loginFailed())
             }
         })
     }
 }
 
-export const logout=()=>{
+export const logout = () => {
     //告诉服务端用户已经退出
-    return dispatch=>{
+    return dispatch => {
         dispatch(loginFailed())
     }
 }

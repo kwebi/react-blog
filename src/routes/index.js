@@ -58,6 +58,13 @@ export const adminRoutes = [
         isNav: false
     },
     {
+        pathname: '/admin/article/add',
+        component: ArticleEdit,
+        title: '新增文章',
+        icon: 'edit',
+        isNav: false
+    },
+    {
         pathname: '/admin/settings',
         component: Settings,
         title: '设置',
