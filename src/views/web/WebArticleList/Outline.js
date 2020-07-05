@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Icon} from "antd";
-import {Link} from "react-router-dom";
+import React, { Component } from 'react';
+import { Icon } from "antd";
+import { Link } from "react-router-dom";
 import './outline.less'
 import '../index.less'
 
@@ -9,7 +9,7 @@ class Outline extends Component {
         return (
             <div className="outline-content">
                 <div>
-                    <img src="https://static.dreamwings.cn/wp-content/uploads/2020/03/20200323194841.jpg" alt=""/>
+                    <img src={this.props.img} alt="" />
                 </div>
                 <div className="outline-main">
                     <div className="outline-title">
@@ -17,25 +17,22 @@ class Outline extends Component {
                     </div>
                     <div className="entry-meta">
                         <ul>
-                            <li>@{this.props.author}</li>
+                            <li>@{this.props.author ? this.props.author : "夏目雫"}</li>
                             <li>/</li>
-                            <li><Icon type="star" theme="filled"/>
+                            <li><Icon type="star" theme="filled" />
                                 {this.props.createAt}
                             </li>
                             <li>/</li>
-                            <li><Icon type="tags" theme="filled"/>
+                            <li><Icon type="tags" theme="filled" />
                                 任意门
                             </li>
                             <li>/</li>
-                            <li><Icon type="eye" theme="filled"/>
+                            <li><Icon type="eye" theme="filled" />
                                 {this.props.amount}
                             </li>
                         </ul>
                     </div>
-                    <div className="entry-excerpt">
-                        <p>呐，这样的结局，有过后悔嘛~</p>
-                        <p>其实呢，都是自己的选择，自己选择了放弃，就该清楚放弃了什么</p>
-                    </div>
+
                 </div>
             </div>
         );

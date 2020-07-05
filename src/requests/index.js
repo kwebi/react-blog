@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { message } from 'antd'
+import { getToken } from '../utils/stroage'
 
 const isDev = process.env.NODE_ENV === 'development'
+
 const service = axios.create({
     baseURL: isDev ? 'http://localhost:6543' : 'http://rap2.taobao.org:38080/app/mock/254197'
 })
@@ -10,11 +12,12 @@ const loginService = axios.create({
     baseURL: isDev ? 'http://localhost:6543' : 'http://rap2.taobao.org:38080/app/mock/254197'
 })
 
+
 service.interceptors.request.use((config) => {
-    config.data = Object.assign({}, config.data, {
-        //token: window.localStorage.getItem('token')
-        token: '12345678'
-    })
+    const token = getToken()
+    if (token) {
+        config.headers.common['Authorization'] = token
+    }
     return config
 }, error => {
     message.error('bed request')
@@ -23,7 +26,6 @@ service.interceptors.request.use((config) => {
 
 let timer
 service.interceptors.response.use((resp) => {
-    console.log(resp)
     if (resp.data.code === 200) {
         return resp.data.data
     }
@@ -72,7 +74,7 @@ export const getArticleById = (id) => {
 
 //保存文章
 export const saveArticle = (id, data) => {
-    return service.post(`/articleEdit/${id}`, data)
+    return service.post(`/article/${id}`, data)
 }
 
 //创建文章
@@ -83,4 +85,9 @@ export const createArticle = (data) => {
 //登录
 export const loginRequest = (userInfo) => {
     return loginService.post('/login', userInfo)
+}
+
+//注册
+export const registerRequest = (userInfo) => {
+    return loginService.post('/register', userInfo)
 }

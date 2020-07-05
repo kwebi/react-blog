@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from "antd";
+import { translateMarkdown } from '../../../utils'
 import moment from "moment";
 import { getArticleById } from "../../../requests";
 import '../index.less'
@@ -14,7 +15,9 @@ class Article extends Component {
                 title: "",
                 author: "",
                 createdAt: "",
-                amount: ""
+                amount: "",
+                content: "",
+                img: "#"
             }
         }
     }
@@ -35,7 +38,7 @@ class Article extends Component {
         return (
             <div className="article-content">
                 <div>
-                    <img src="https://static.dreamwings.cn/wp-content/uploads/2020/03/72683c0777833534f746219f5c4f177e-1.jpg" alt="" />
+                    <img src={this.state.article.img} alt="" />
                 </div>
                 <div className="article-container">
                     <div className="outline-title">
@@ -58,8 +61,8 @@ class Article extends Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="article-main">
-                        {this.state.article.content}
+                    <div className="article-main" >
+                        <div dangerouslySetInnerHTML={{ __html: translateMarkdown(this.state.article.content) }}></div>
                     </div>
                 </div>
             </div>

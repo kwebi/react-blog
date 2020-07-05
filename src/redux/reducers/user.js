@@ -1,15 +1,15 @@
 import actionTypes from "../actions/actionTypes";
-import {getLocal, getSession} from "../../utils/stroage";
+import { getLocal, getSession } from "../../utils/stroage";
 
-const isLogin = Boolean(getLocal('token')) || Boolean(getSession('token'))
+const isLogin = Boolean(getLocal('userInfo')) || Boolean(getSession('userInfo'))
 const localUserInfo = getLocal('userInfo')
-const userInfo = localUserInfo!=null ? localUserInfo : getSession('userInfo')
+const userInfo = localUserInfo != null ? localUserInfo : getSession('userInfo')
 
 const initState = Object.assign({
-    id: '',
-    displayName: '',
+    userId: -1,
+    username: '',
     avatar: '',
-    role: '',
+    role: -1,
     isLogin: isLogin,
     isLoading: false,
 }, userInfo)
@@ -26,14 +26,14 @@ export default (state = initState, action) => {
                 ...state,
                 ...action.payload.userInfo,
                 isLoading: false,
-                isLogin: true
+                isLogin: true,
             }
         case actionTypes.LOGIN_FAILED:
             return {
-                id: '',
-                displayName: '',
+                userId: -1,
+                username: '',
                 avatar: '',
-                role: '',
+                role: -1,
                 isLogin: false,
                 isLoading: false,
             }

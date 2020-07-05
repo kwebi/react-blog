@@ -1,47 +1,51 @@
 
 import Loadable from 'react-loadable'
-import {Loading} from "../components";
+import { Loading } from "../components";
 
 const Dashboard = Loadable({
-    loader: ()=> import('./admin/Dashboard'),
+    loader: () => import('./admin/Dashboard'),
     loading: Loading
 })
 
 const Login = Loadable({
-    loader: ()=> import('./Login'),
+    loader: () => import('./Login'),
     loading: Loading
 })
 
 const NotFound = Loadable({
-    loader: ()=> import('./NotFound'),
+    loader: () => import('./NotFound'),
     loading: Loading
 })
 const Settings = Loadable({
-    loader: ()=> import('./admin/Settings'),
+    loader: () => import('./admin/Settings'),
     loading: Loading
 })
 const ArticleList = Loadable({
-    loader: ()=> import('./admin/Article/index'),
+    loader: () => import('./admin/Article/index'),
     loading: Loading
 })
 const ArticleEdit = Loadable({
-    loader: ()=> import('./admin/Article/Edit'),
+    loader: () => import('./admin/Article/Edit'),
     loading: Loading
 })
 const Notifications = Loadable({
-    loader: ()=> import('./admin/Notifications'),
+    loader: () => import('./admin/Notifications'),
     loading: Loading
 })
 const NoAuth = Loadable({
-    loader:()=>import('./admin/NoAuth'),
+    loader: () => import('./admin/NoAuth'),
     loading: Loading
 })
 const Article = Loadable({
-    loader:()=>import('./web/Article'),
+    loader: () => import('./web/Article'),
     loading: Loading
 })
 const WebArticleList = Loadable({
-    loader:()=>import('./web/WebArticleList'),
+    loader: () => import('./web/WebArticleList'),
+    loading: Loading
+})
+const Register = Loadable({
+    loader: () => import('./Register'),
     loading: Loading
 })
 
@@ -55,5 +59,6 @@ export {
     Notifications,
     NoAuth,
     Article,
-    WebArticleList
+    WebArticleList,
+    Register
 }

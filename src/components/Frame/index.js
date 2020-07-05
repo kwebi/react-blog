@@ -1,37 +1,37 @@
-import React, {Component} from 'react';
-import {Layout, Menu, Icon, Dropdown, Avatar, Badge} from 'antd';
-import {withRouter} from 'react-router-dom'
-import {connect} from "react-redux";
-import {logout} from '../../redux/actions/user'
+import React, { Component } from 'react';
+import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd';
+import { withRouter } from 'react-router-dom'
+import { connect } from "react-redux";
+import { logout } from '../../redux/actions/user'
 import logo from './logo.png'
 import './frame.less'
 
-const {Header, Content, Sider} = Layout;
+const { Header, Content, Sider } = Layout;
 
 const mapState = state => {
     return {
-        notificationsCount: state.notifications.list.filter(item=>item.hasRead===false).length,
+        notificationsCount: state.notifications.list.filter(item => item.hasRead === false).length,
         avatar: state.user.avatar,
-        displayName: state.user.displayName
+        displayName: state.user.username
     }
 }
 
 
 class Frame extends Component {
-    onMenuClick = ({key}) => {
+    onMenuClick = ({ key }) => {
         this.props.history.push(key)
     }
-    onDropdownMenuClick = ({ item, key, keyPath, domEvent })=>{
-        if(key==='/logout'){
+    onDropdownMenuClick = ({ item, key, keyPath, domEvent }) => {
+        if (key === '/logout') {
             this.props.logout()
-        }else {
+        } else {
             this.props.history.push(key)
         }
     }
-    renderDropdown = ()=> (
+    renderDropdown = () => (
         <Menu onClick={this.onDropdownMenuClick}>
             <Menu.Item key="/admin/notifications">
-                <Badge offset={[10,5]} count={this.props.notificationsCount}>
+                <Badge offset={[10, 5]} count={this.props.notificationsCount}>
                     通知
                 </Badge>
             </Menu.Item>
@@ -48,16 +48,16 @@ class Frame extends Component {
         const selectedKeyArr = this.props.location.pathname.split('/')
         selectedKeyArr.length = 3
         return (
-            <Layout style={{height: '100%'}}>
+            <Layout style={{ height: '100%' }}>
                 <Header className="header ql-header">
                     <div className="ql-logo">
-                        <img src={logo} alt="Dreamwings"/>
+                        <img src={logo} alt="Dreamwings" />
                     </div>
                     <Dropdown overlay={this.renderDropdown()}>
-                        <div style={{display: 'flex', alignItems: 'center'}}>
-                            <Avatar src={this.props.avatar}/>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Avatar src={this.props.avatar} />
                             <span>{this.props.displayName}</span>
-                            <Icon type="down"/>
+                            <Icon type="down" />
                         </div>
                     </Dropdown>
                 </Header>
@@ -67,7 +67,7 @@ class Frame extends Component {
                             mode="inline"
                             selectedKeys={selectedKeyArr.join('/')}
                             defaultOpenKeys={['sub1']}
-                            style={{height: '100%', borderRight: 0}}
+                            style={{ height: '100%', borderRight: 0 }}
                             onClick={this.onMenuClick}
                         >
 
@@ -81,7 +81,7 @@ class Frame extends Component {
                             }
                         </Menu>
                     </Sider>
-                    <Layout style={{padding: '12px', height: '100%'}}>
+                    <Layout style={{ padding: '12px', height: '100%' }}>
                         <Content
                             className="site-layout-background"
                             style={{
@@ -99,4 +99,4 @@ class Frame extends Component {
     }
 }
 
-export default connect(mapState,{logout})(withRouter(Frame));
+export default connect(mapState, { logout })(withRouter(Frame));

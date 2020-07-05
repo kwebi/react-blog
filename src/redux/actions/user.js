@@ -1,6 +1,7 @@
 import actionTypes from "./actionTypes";
 import { loginRequest } from "../../requests/index"
 import { removeLocal, removeSession, saveLocal, saveSession } from "../../utils/stroage";
+import { message } from "antd";
 
 const startLogin = () => {
     return {
@@ -17,8 +18,6 @@ const loginSuccess = (userInfo) => {
     }
 }
 const loginFailed = () => {
-    removeLocal('token')
-    removeSession('token')
     removeLocal('userInfo')
     removeSession('userInfo')
     return {
@@ -30,22 +29,23 @@ export const login = (userInfo) => {
     return dispatch => {
         dispatch(startLogin())
         loginRequest(userInfo).then(resp => {
+            console.log(resp.data.data)
             if (resp.data.code === 200) {
                 const {
-                    token,
                     ...newUserInfo
                 } = resp.data.data
+
                 if (userInfo.remember === true) {
-                    saveLocal('token', token)
                     saveLocal('userInfo', newUserInfo)
                 } else {
-                    saveSession('token', token)
                     saveSession('userInfo', newUserInfo)
                 }
                 dispatch(loginSuccess(resp.data.data))
-            } else {
-                dispatch(loginFailed())
             }
+        }, err => {
+            dispatch(loginFailed())
+            console.log(err)
+            message.error("登录失败")
         })
     }
 }

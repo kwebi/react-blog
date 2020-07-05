@@ -8,7 +8,8 @@ import {
     Notifications,
     NoAuth,
     Article,
-    WebArticleList
+    WebArticleList,
+    Register
 } from '../views'
 
 export const mainRoutes = [
@@ -32,6 +33,10 @@ export const otherRoutes = [
         pathname: '/404',
         component: NotFound
     },
+    {
+        pathname: '/register',
+        component: Register
+    }
 ]
 
 export const adminRoutes = [

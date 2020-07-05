@@ -42,6 +42,8 @@ class ArticleEdit extends Component {
                         this.props.history.push('/admin/article')
                     })
                 } else {
+                    const id = parseInt(this.props.match.params.id)
+                    Object.assign(data, { id: id })
                     saveArticle(this.props.match.params.id, data).then(resp => {
                         message.success(resp.msg)
                     }).finally(() => {
@@ -95,7 +97,14 @@ class ArticleEdit extends Component {
                                 />,
                             )}
                         </Form.Item>
-
+                        <Form.Item label="文章图片">
+                            {getFieldDecorator('img', {
+                                rules: [{ required: true, message: '文章图片必填' }],
+                            })(
+                                <Input
+                                />,
+                            )}
+                        </Form.Item>
 
                         <Form.Item label="时间">
                             {getFieldDecorator('createAt', {
