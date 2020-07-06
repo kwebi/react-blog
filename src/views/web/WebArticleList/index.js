@@ -41,9 +41,9 @@ class WebArticleList extends Component {
             <div>
                 {
                     this.state.dataSource.map(item => {
-                        const formatDate = moment(item.createAt).format("YYYY年MM月DD日")
+                        const formatDate = moment(item.updatedAt).format("YYYY年MM月DD日")
                         const newItem = Object.assign({}, item, {
-                            createAt: formatDate
+                            updatedAt: formatDate
                         })
                         return <Outline key={item.id} {...newItem} />
                     })

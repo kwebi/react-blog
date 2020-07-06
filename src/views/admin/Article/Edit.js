@@ -27,7 +27,7 @@ class ArticleEdit extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const data = Object.assign({}, values, {
-                    createAt: values.createAt.valueOf()
+                    updatedAt: values.updatedAt.valueOf()
                 })
                 this.setState({
                     isLoading: true
@@ -62,7 +62,8 @@ class ArticleEdit extends Component {
             this.props.form.setFieldsValue({
                 title: resp.title,
                 content: resp.content,
-                createAt: moment(resp.createAt)
+                updatedAt: moment(resp.updatedAt),
+                img: resp.img
             })
         })
     }
@@ -107,7 +108,7 @@ class ArticleEdit extends Component {
                         </Form.Item>
 
                         <Form.Item label="时间">
-                            {getFieldDecorator('createAt', {
+                            {getFieldDecorator('updatedAt', {
                                 rules: [{ required: true, message: '时间' }],
                             })(
                                 <DatePicker showTime placeholder="选择时间" />

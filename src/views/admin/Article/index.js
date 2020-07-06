@@ -8,8 +8,9 @@ const titleDisplayMap = {
     id: 'id',
     title: '标题',
     author: '作者',
-    createAt: '创建时间',
-    amount: '阅读量'
+    updatedAt: '修改时间',
+    amount: '阅读量',
+    //content: '内容'
 }
 
 const ButtonGroup = Button.Group
@@ -39,21 +40,23 @@ class ArticleList extends Component {
                     }
                 }
             }
-            if (item === 'createAt') {
+            if (item === 'updatedAt') {
                 return {
                     title: titleDisplayMap[item],
                     key: item,
                     render: (text, record, index) => {
-                        const { createAt } = record
-                        return moment(createAt).format('YYYY年MM月DD日 HH:mm')
+                        const { updatedAt } = record
+                        return moment(updatedAt).format('YYYY年MM月DD日 HH:mm')
                     }
                 }
             }
+
             return {
                 title: titleDisplayMap[item],
                 dataIndex: item,
                 key: item
             }
+
         })
         columns.push({
             title: '操作',
@@ -99,7 +102,14 @@ class ArticleList extends Component {
             isLoading: true
         })
         getArticles(this.state.offset, this.state.limited).then(resp => {
-            const columnsKeys = Object.keys(resp.list[0])
+            const columnsKeys = ['id', 'title', 'updatedAt', 'amount'] //Object.keys(resp.list[0])
+            resp.list.map(item => {
+                // const contentLimited = item.content.slice(0, 20) + '...';//内容压缩显示
+                // Object.assign(item, {
+                //     content: contentLimited
+                // })
+                return item
+            })
             const columns = this.createColumns(columnsKeys)
             this.setState({
                 total: resp.total,

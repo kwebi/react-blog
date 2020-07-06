@@ -20,7 +20,7 @@ class Outline extends Component {
                             <li>@{this.props.author ? this.props.author : "夏目雫"}</li>
                             <li>/</li>
                             <li><Icon type="star" theme="filled" />
-                                {this.props.createAt}
+                                {this.props.updatedAt}
                             </li>
                             <li>/</li>
                             <li><Icon type="tags" theme="filled" />
