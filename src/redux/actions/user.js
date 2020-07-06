@@ -34,13 +34,13 @@ export const login = (userInfo) => {
                 const {
                     ...newUserInfo
                 } = resp.data.data
-
                 if (userInfo.remember === true) {
                     saveLocal('userInfo', newUserInfo)
                 } else {
                     saveSession('userInfo', newUserInfo)
                 }
-                dispatch(loginSuccess(resp.data.data))
+                console.log(newUserInfo)
+                dispatch(loginSuccess(newUserInfo))
             }
         }, err => {
             dispatch(loginFailed())

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Spin, message } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Spin } from 'antd';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 

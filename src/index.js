@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 
 import App from "./App";
 import './index.less'
-import {HashRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import {mainRoutes, otherRoutes} from "./routes";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { mainRoutes, otherRoutes } from "./routes";
 import zhCN from 'antd/es/locale/zh_CN';
-import {ConfigProvider} from 'antd'
+import { ConfigProvider } from 'antd'
 
 import store from './store'
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 import WebFrame from "./components/WebFrame";
 
 ReactDOM.render(
@@ -19,25 +19,25 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/admin" render={(routerProps) => {
                         return <App {...routerProps} />
-                    }}/>
+                    }} />
                     {otherRoutes.map((route) =>
                         (<Route key={route.pathname}
-                                path={route.pathname}
-                                component={route.component}
+                            path={route.pathname}
+                            component={route.component}
                         />))}
                     <Route path="/" render={(routerProps) => {
                         return (<WebFrame {...routerProps}>
                             <Switch>
                                 {mainRoutes.map(route => {
                                     return <Route key={route.pathname} path={route.pathname}
-                                                  component={route.component} exact={route.exact}/>
+                                        component={route.component} exact={route.exact} />
                                 })}
-                                <Redirect to="/article" from="/" exact={true}/>
+                                <Redirect to="/article" from="/" exact={true} />
                                 <Redirect to="/404" />
                             </Switch>
                         </WebFrame>)
-                    }}/>
-                    <Redirect to="/404"/>
+                    }} />
+                    <Redirect to="/404" />
                 </Switch>
             </Router>
         </ConfigProvider>

@@ -4,6 +4,7 @@ import SimpleMDEEditor from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { getArticleById, saveArticle, createArticle } from '../../../requests'
 import moment from 'moment'
+import { getLocal, getSession } from '../../../utils/stroage';
 
 const formItemLayout = {
     labelCol: {
@@ -26,8 +27,10 @@ class ArticleEdit extends Component {
         e.preventDefault()
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                const userInfo = getLocal('userInfo') || getSession('userInfo')
                 const data = Object.assign({}, values, {
-                    updatedAt: values.updatedAt.valueOf()
+                    updatedAt: values.updatedAt.valueOf(),
+                    userId: userInfo.userId
                 })
                 this.setState({
                     isLoading: true

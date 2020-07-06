@@ -7,7 +7,6 @@ import '../index.less'
 import './article.less'
 
 class Article extends Component {
-
     constructor(props) {
         super(props);
         this.state = {

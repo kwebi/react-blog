@@ -37,7 +37,7 @@ class Register extends Component {
                     return;
                 }
                 registerRequest(values).then(res => {
-
+                    console.log(res)
                     if (res.data.code === 200) {
                         message.success('注册成功')
                         this.props.history.push('/login')
@@ -86,6 +86,26 @@ class Register extends Component {
                                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                                 type="password"
                                 placeholder="再次输入密码"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('img', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="输入头像图片链接"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('nickname', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="输入昵称"
                             />,
                         )}
                     </Form.Item>

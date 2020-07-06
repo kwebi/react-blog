@@ -25,12 +25,13 @@ service.interceptors.request.use((config) => {
 })
 
 let timer
-service.interceptors.response.use((resp) => {
+service.interceptors.response.use(resp => {
     if (resp.data.code === 200) {
         return resp.data.data
     }
 }, err => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
+
     clearTimeout(timer)
     timer = setTimeout(() => {
         if (err.response) {
@@ -39,7 +40,6 @@ service.interceptors.response.use((resp) => {
                 case 401:
                     message.error((data && data.message) || '登录信息过期或未授权，请重新登录！')
                     break
-
                 default:
                     message.error(data.message || `连接错误 ${status}！`)
                     break
@@ -90,4 +90,14 @@ export const loginRequest = (userInfo) => {
 //注册
 export const registerRequest = (userInfo) => {
     return loginService.post('/register', userInfo)
+}
+
+//设置个人信息
+export const setting = (userInfo) => {
+    return service.put(`/user/${userInfo.userId}`, userInfo)
+}
+
+//获取个人信息
+export const getSettingById = (id) => {
+    return service.get(`/user/${id}`)
 }

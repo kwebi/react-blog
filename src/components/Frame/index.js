@@ -11,8 +11,8 @@ const { Header, Content, Sider } = Layout;
 const mapState = state => {
     return {
         notificationsCount: state.notifications.list.filter(item => item.hasRead === false).length,
-        avatar: state.user.avatar,
-        displayName: state.user.username
+        avatar: state.user.img,
+        displayName: state.user.nickname
     }
 }
 

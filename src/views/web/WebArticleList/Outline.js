@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import './outline.less'
 import '../index.less'
 
+
 class Outline extends Component {
     render() {
         return (
@@ -17,7 +18,7 @@ class Outline extends Component {
                     </div>
                     <div className="entry-meta">
                         <ul>
-                            <li>@{this.props.author ? this.props.author : "夏目雫"}</li>
+                            <li>@{this.props.author ? this.props.author : '夏目蓝'}</li>
                             <li>/</li>
                             <li><Icon type="star" theme="filled" />
                                 {this.props.updatedAt}
