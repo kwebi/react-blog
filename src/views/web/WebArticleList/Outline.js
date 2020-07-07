@@ -9,12 +9,12 @@ class Outline extends Component {
     render() {
         return (
             <div className="outline-content">
-                <div>
+                <div className="article-img">
                     <img src={this.props.img} alt="" />
                 </div>
                 <div className="outline-main">
                     <div className="outline-title">
-                        <Link to={`/article/${this.props.id}`}>{this.props.title}</Link>
+                        <Link className="outline-title" to={`/article/${this.props.id}`}>{this.props.title}</Link>
                     </div>
                     <div className="entry-meta">
                         <ul>

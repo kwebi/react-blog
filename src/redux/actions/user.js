@@ -29,7 +29,6 @@ export const login = (userInfo) => {
     return dispatch => {
         dispatch(startLogin())
         loginRequest(userInfo).then(resp => {
-            console.log(resp.data.data)
             if (resp.data.code === 200) {
                 const {
                     ...newUserInfo
@@ -39,13 +38,11 @@ export const login = (userInfo) => {
                 } else {
                     saveSession('userInfo', newUserInfo)
                 }
-                console.log(newUserInfo)
                 dispatch(loginSuccess(newUserInfo))
             }
         }, err => {
             dispatch(loginFailed())
-            console.log(err)
-            message.error("登录失败")
+            message.error(err.response.data.message)
         })
     }
 }

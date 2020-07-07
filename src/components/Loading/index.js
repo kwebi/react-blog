@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class Loading extends Component {
     render() {
         return (
-            <div>
-                loading
+            <div style={{ textAlign: "center" }}>
+                Loading...
             </div>
         );
     }

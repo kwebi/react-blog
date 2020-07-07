@@ -101,3 +101,8 @@ export const setting = (userInfo) => {
 export const getSettingById = (id) => {
     return service.get(`/user/${id}`)
 }
+
+//获取热门文章
+export const getHotArticles = () => {
+    return service.get('/article/hot')
+}

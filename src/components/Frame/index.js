@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon, Dropdown, Avatar, Badge } from 'antd';
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from "react-redux";
 import { logout } from '../../redux/actions/user'
 import logo from './logo.png'
@@ -51,7 +51,9 @@ class Frame extends Component {
             <Layout style={{ height: '100%' }}>
                 <Header className="header ql-header">
                     <div className="ql-logo">
-                        <img src={logo} alt="Dreamwings" />
+                        <Link to="/">
+                            <img src={logo} alt="Dreamwings" />
+                        </Link>
                     </div>
                     <Dropdown overlay={this.renderDropdown()}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>

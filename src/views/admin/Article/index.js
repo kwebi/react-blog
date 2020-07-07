@@ -138,7 +138,6 @@ class ArticleList extends Component {
     }
 
     onShowSizeChange = (current, size) => {
-        console.log(current, size)
         this.setState({
             limited: size,
             offset: 0

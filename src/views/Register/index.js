@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Spin, message } from 'antd';
+import { Form, Icon, Input, Button, message } from 'antd';
 import { Redirect } from 'react-router-dom'
 
 
@@ -37,15 +37,12 @@ class Register extends Component {
                     return;
                 }
                 registerRequest(values).then(res => {
-                    console.log(res)
                     if (res.data.code === 200) {
                         message.success('注册成功')
                         this.props.history.push('/login')
-                    } else {
-                        message.error(res.data.errMsg)
                     }
                 }).catch(err => {
-                    message.error('注册失败')
+                    message.error(err.response.data.message)
                 })
             }
         });

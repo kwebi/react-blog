@@ -63,6 +63,10 @@ class Settings extends Component {
 
     getUserSetting = () => {
         const userInfo = getSession('userInfo') || getLocal('userInfo')
+        if (!userInfo.userId) {
+            message.warning('登录过期！')
+            return Promise.reject()
+        }
         return getSettingById(userInfo.userId).then(resp => {
             this.props.form.setFieldsValue({
                 img: resp.userInfo.img,
@@ -84,9 +88,9 @@ class Settings extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div>
-                <Spin spinning={this.state.isLoading}>
-                    <Form style={{ marginTop: "40px" }} onSubmit={this.handleRegister} className="login-form" wrapperCol={formItemLayout}>
+            <div style={{ position: 'absolute', width: '80%', height: '100%' }}>
+                <Spin spinning={this.state.isLoading} >
+                    <Form onSubmit={this.handleRegister} className="login-form" wrapperCol={formItemLayout}>
                         <Form.Item>
                             {getFieldDecorator('password', {
                                 rules: [{ required: true, message: 'Please input your Password!' }],
