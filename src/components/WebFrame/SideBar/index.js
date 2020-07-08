@@ -3,7 +3,7 @@ import { Avatar, Icon } from "antd";
 import { getHotArticles } from '../../../requests'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
-import { like, getLike } from '../../../requests'
+import { like, getLike, getPublic } from '../../../requests'
 
 let timer
 
@@ -13,7 +13,8 @@ class SideBar extends Component {
         super(props)
         this.state = {
             articleList: [],
-            like: 0
+            like: 0,
+            publicInfo: {}
         }
     }
 
@@ -39,6 +40,13 @@ class SideBar extends Component {
             })
         })
     }
+    getPublicInfo = () => {
+        getPublic().then(res => {
+            this.setState({
+                publicInfo: res
+            })
+        })
+    }
 
     handleLike = () => {
         //0.5s内多次点击只有一次有效
@@ -54,6 +62,7 @@ class SideBar extends Component {
     componentDidMount() {
         this.reloadArticles()
         this.getLike()
+        this.getPublicInfo()
     }
 
     render() {
@@ -61,7 +70,7 @@ class SideBar extends Component {
             <div className="side-bar">
                 <div className="side-avatar">
                     <Avatar className="avatar"
-                        src="https://static.dreamwings.cn/wp-content/uploads/2018/06/806e52a2e2b9ff4bd2c23140df75cc1f.jpeg" />
+                        src={this.state.publicInfo.img} />
                 </div>
                 <div className="like-me">
                     <div className="like-me-text">

@@ -115,3 +115,8 @@ export const like = () => {
 export const getLike = () => {
     return service.get('/like')
 }
+
+//获取公开用户信息
+export const getPublic = () => {
+    return service.get('/public')
+}
