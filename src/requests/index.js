@@ -106,3 +106,12 @@ export const getSettingById = (id) => {
 export const getHotArticles = () => {
     return service.get('/article/hot')
 }
+
+//喜欢该站点
+export const like = () => {
+    return service.post('/like')
+}
+
+export const getLike = () => {
+    return service.get('/like')
+}

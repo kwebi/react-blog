@@ -35,7 +35,6 @@ class Settings extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-
                 if (values.password2 !== values.password1) {
                     message.error('密码不一致')
                     return;
@@ -63,7 +62,7 @@ class Settings extends Component {
 
     getUserSetting = () => {
         const userInfo = getSession('userInfo') || getLocal('userInfo')
-        if (!userInfo.userId) {
+        if (!userInfo) {
             message.warning('登录过期！')
             return Promise.reject()
         }
@@ -88,70 +87,69 @@ class Settings extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
-            <div style={{ position: 'absolute', width: '80%', height: '100%' }}>
-                <Spin spinning={this.state.isLoading} >
-                    <Form onSubmit={this.handleRegister} className="login-form" wrapperCol={formItemLayout}>
-                        <Form.Item>
-                            {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="旧密码"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('password1', {
-                                rules: [{ required: false, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="输入新密码"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('password2', {
-                                rules: [{ required: false, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    type="password"
-                                    placeholder="再次输入新密码"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('img', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="新头像图片链接"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            {getFieldDecorator('nickname', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
-                            })(
-                                <Input
-                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                    placeholder="修改昵称"
-                                />,
-                            )}
-                        </Form.Item>
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit" disabled={this.props.isLoading}>
-                                修改
+            <Spin spinning={this.state.isLoading} >
+                <Form style={{ display: 'inline' }} onSubmit={this.handleRegister} className="login-form" wrapperCol={formItemLayout}>
+                    <Form.Item>
+                        {getFieldDecorator('password', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                type="password"
+                                placeholder="旧密码"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('password1', {
+                            rules: [{ required: false, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                type="password"
+                                placeholder="输入新密码"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('password2', {
+                            rules: [{ required: false, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                type="password"
+                                placeholder="再次输入新密码"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('img', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="新头像图片链接"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        {getFieldDecorator('nickname', {
+                            rules: [{ required: true, message: 'Please input your Password!' }],
+                        })(
+                            <Input
+                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                placeholder="修改昵称"
+                            />,
+                        )}
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" disabled={this.props.isLoading}>
+                            修改
                         </Button>
-                        </Form.Item>
-                    </Form>
-                </Spin>
-            </div>
+                    </Form.Item>
+                </Form>
+            </Spin>
+
         );
     }
 }

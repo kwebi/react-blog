@@ -3,6 +3,9 @@ import { Avatar, Icon } from "antd";
 import { getHotArticles } from '../../../requests'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+import { like, getLike } from '../../../requests'
+
+let timer
 
 class SideBar extends Component {
 
@@ -10,6 +13,7 @@ class SideBar extends Component {
         super(props)
         this.state = {
             articleList: [],
+            like: 0
         }
     }
 
@@ -28,9 +32,28 @@ class SideBar extends Component {
     linkToArticle = (id) => {
         this.props.history.push(`/article/${id}`)
     }
+    getLike = () => {
+        getLike().then(res => {
+            this.setState({
+                like: res
+            })
+        })
+    }
+
+    handleLike = () => {
+        //0.5s内多次点击只有一次有效
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            like().finally(() => {
+                this.getLike()
+            })
+        }, 200)
+
+    }
 
     componentDidMount() {
         this.reloadArticles()
+        this.getLike()
     }
 
     render() {
@@ -44,13 +67,12 @@ class SideBar extends Component {
                     <div className="like-me-text">
                         Do you like me?
                     </div>
-                    <div className="heart-icon">
-                        <Icon type="heart" theme="filled" />1222
+                    <div className="heart-icon" onClick={this.handleLike}>
+                        <Icon type="heart" theme="filled" />{this.state.like}
                     </div>
                 </div>
                 <div className="hot-articles">
-                    <ul>
-
+                    <ul style={{ padding: 0 }}>
                         {this.state.articleList.map((article, index) => {
                             return (
                                 <li key={index} onClick={() => {
@@ -60,6 +82,7 @@ class SideBar extends Component {
                                         src={article.img} />
                                     <div className="desc-text">
                                         <span>{article.title}</span>
+                                        <br />
                                         <span className="push-time">{article.updatedAt}</span>
                                     </div>
                                 </li>
