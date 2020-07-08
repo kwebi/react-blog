@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from "antd";
 import { Link } from "react-router-dom";
-import './outline.less'
-import '../index.less'
 
 
 class Outline extends Component {
@@ -10,7 +8,7 @@ class Outline extends Component {
         return (
             <div className="outline-content">
                 <div className="article-img">
-                    <img src={this.props.img} alt="" />
+                    <img className="article-img" src={this.props.img} alt="" />
                 </div>
                 <div className="outline-main">
                     <div className="outline-title">

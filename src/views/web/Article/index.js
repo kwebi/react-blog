@@ -16,18 +16,16 @@ class Article extends Component {
                 createdAt: "",
                 amount: "",
                 content: "",
-                img: "#"
+                img: "#",
+                id: ''
             },
             isLoading: false
         }
     }
 
     getArticle = (id) => {
-        return getArticleById(id)
-    }
-    componentDidMount() {
         this.setState({ isLoading: true })
-        this.getArticle(this.props.match.params.id).then(resp => {
+        getArticleById(id).then(resp => {
             resp.createdAt = moment(resp.createdAt).format("YYYY年MM月DD日 hh:mm")
             this.setState({
                 article: resp
@@ -37,12 +35,23 @@ class Article extends Component {
         })
     }
 
+    componentDidMount() {
+        this.props.history.listen(route => {
+            const arr = route.pathname.split('/')
+            const id = parseInt(arr[arr.length - 1])
+            if (id && !isNaN(id))
+                this.getArticle(id)
+        })
+        this.getArticle(this.props.match.params.id)
+    }
+
     render() {
+
         return (
             <Spin spinning={this.state.isLoading}>
                 <div className="article-content">
                     <div className="article-img">
-                        <img src={this.state.article.img} alt="" />
+                        <img className="article-img" src={this.state.article.img} alt="" />
                     </div>
                     <div className="article-container">
                         <div className="outline-title">

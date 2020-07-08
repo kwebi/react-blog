@@ -48,6 +48,10 @@ const Register = Loadable({
     loader: () => import('./Register'),
     loading: Loading
 })
+const Outline = Loadable({
+    loader: () => import('./web/WebArticleList/Outline'),
+    loading: Loading
+})
 
 export {
     Dashboard,
@@ -60,5 +64,6 @@ export {
     NoAuth,
     Article,
     WebArticleList,
-    Register
+    Register,
+    Outline
 }

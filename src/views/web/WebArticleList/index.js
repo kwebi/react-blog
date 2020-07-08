@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { getArticles } from "../../../requests";
 import moment from "moment";
 import Outline from "./Outline";
+import './outline.less'
+import '../index.less'
 
 class WebArticleList extends Component {
     constructor(props) {

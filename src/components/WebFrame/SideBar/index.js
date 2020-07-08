@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Avatar, Icon } from "antd";
 import { getHotArticles } from '../../../requests'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 
 class SideBar extends Component {
@@ -12,7 +13,7 @@ class SideBar extends Component {
         }
     }
 
-    componentDidMount() {
+    reloadArticles = () => {
         getHotArticles().then(res => {
             const data = res.map(article => {
                 article.updatedAt = moment(article.updatedAt).format('YYYY年MM月DD日 hh:mm')
@@ -22,6 +23,14 @@ class SideBar extends Component {
                 articleList: data
             })
         })
+    }
+
+    linkToArticle = (id) => {
+        this.props.history.push(`/article/${id}`)
+    }
+
+    componentDidMount() {
+        this.reloadArticles()
     }
 
     render() {
@@ -44,7 +53,9 @@ class SideBar extends Component {
 
                         {this.state.articleList.map((article, index) => {
                             return (
-                                <li key={index}>
+                                <li key={index} onClick={() => {
+                                    this.linkToArticle(article.id)
+                                }} style={{ cursor: 'pointer' }}>
                                     <Avatar size={60} shape={"square"} className="avatar"
                                         src={article.img} />
                                     <div className="desc-text">
@@ -61,4 +72,4 @@ class SideBar extends Component {
     }
 }
 
-export default SideBar;
+export default withRouter(SideBar);

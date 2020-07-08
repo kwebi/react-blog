@@ -15,7 +15,8 @@ import {
 export const mainRoutes = [
     {
         pathname: '/article/:id',
-        component: Article
+        component: Article,
+        exact: true
     },
     {
         pathname: '/article',
