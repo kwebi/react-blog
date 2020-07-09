@@ -17,14 +17,14 @@ class WebArticleList extends Component {
         }
     }
 
-    getData = () => {
+    getData = (offset, limit) => {
         this.setState({
             isLoading: true
         })
-        getArticles(this.state.offset, this.state.limit).then(resp => {
+        getArticles(offset, limit).then(resp => {
             this.setState({
                 dataSource: resp.list,
-                total: resp.total
+                total: resp.total.total
             })
         }).finally(() => {
             this.setState({
@@ -34,8 +34,25 @@ class WebArticleList extends Component {
 
     }
 
+    handlePre = () => {
+        let offset = this.state.offset - this.state.limit
+        if (offset <= 0) offset = 0
+        this.setState({
+            offset
+        })
+        this.getData(offset, this.state.limit)
+    }
+    handleNext = () => {
+        let offset = this.state.offset + this.state.limit
+        if (offset > this.state.total) offset = this.state.offset
+        this.setState({
+            offset
+        })
+        this.getData(offset, this.state.limit)
+    }
+
     componentDidMount() {
-        this.getData()
+        this.getData(this.state.offset, this.state.limit)
     }
 
     render() {
@@ -50,6 +67,14 @@ class WebArticleList extends Component {
                         return <Outline key={item.id} {...newItem} />
                     })
                 }
+                <div className="next-previous-posts">
+                    <div className="page-btn" onClick={this.handlePre}>
+                        <span>&lt;前一页</span>
+                    </div>
+                    <div className="page-btn" onClick={this.handleNext}>
+                        <span>后一页&gt;</span>
+                    </div>
+                </div>
             </div>
         );
     }

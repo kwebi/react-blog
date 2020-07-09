@@ -64,14 +64,14 @@ class Article extends Component {
                                 <li><Icon type="star" theme="filled" />
                                     {this.state.article.createdAt}
                                 </li>
-                                <li>/</li>
+                                {/* <li>/</li>
                                 <li><Icon type="tags" theme="filled" />
                                 任意门
-                            </li>
+                                </li>
                                 <li>/</li>
                                 <li><Icon type="eye" theme="filled" />
                                     {this.state.article.amount}
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
                         <div className="article-main" >

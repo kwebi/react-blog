@@ -54,7 +54,7 @@ service.interceptors.response.use(resp => {
 
 
 //获取文章列表
-export const getArticles = (offset = 0, limit = 5) => {
+export const getArticles = (offset = 0, limit = 6) => {
     return service.get('/article', {
         params: {
             offset,

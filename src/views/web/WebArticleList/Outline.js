@@ -21,14 +21,14 @@ class Outline extends Component {
                             <li><Icon type="star" theme="filled" />
                                 {this.props.updatedAt}
                             </li>
-                            <li>/</li>
+                            {/* <li>/</li>
                             <li><Icon type="tags" theme="filled" />
                                 任意门
                             </li>
                             <li>/</li>
                             <li><Icon type="eye" theme="filled" />
                                 {this.props.amount}
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
 
