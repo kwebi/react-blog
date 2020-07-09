@@ -13,7 +13,7 @@ class WebArticleList extends Component {
             total: 0,
             isLoading: false,
             offset: 0,
-            limit: 6
+            limit: 6,
         }
     }
 
@@ -22,6 +22,10 @@ class WebArticleList extends Component {
             isLoading: true
         })
         getArticles(offset, limit).then(resp => {
+            resp.list.map((item, index) => {
+                item.order = index + offset
+                return item
+            })
             this.setState({
                 dataSource: resp.list,
                 total: resp.total.total

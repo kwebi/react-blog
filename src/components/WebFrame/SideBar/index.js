@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Avatar, Icon } from "antd";
-import { getHotArticles } from '../../../requests'
+import { getArticles } from '../../../requests'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import { like, getLike, getPublic } from '../../../requests'
@@ -14,20 +14,40 @@ class SideBar extends Component {
         this.state = {
             articleList: [],
             like: 0,
-            publicInfo: {}
+            publicInfo: {},
+            total: -1
         }
     }
 
     reloadArticles = () => {
-        getHotArticles().then(res => {
-            const data = res.map(article => {
-                article.updatedAt = moment(article.updatedAt).format('YYYY年MM月DD日 hh:mm')
-                return article
+        getArticles(0, 1).then(async res => {
+            if (this.state.total === -1) {
+                this.setState({
+                    total: res.total.total
+                })
+            }
+            const total = res.total.total
+            const st = new Set()
+            while (st.size < 6 && st.size < total - 1) {
+                st.add(Math.floor(Math.random() * total))
+            }
+            let articleList = []
+            for (let order of st) {
+                const res = await getArticles(order, 1)
+                if (res.list.length === 0) return
+                const data = res.list[0]
+                data.order = order
+                articleList.push(data)
+            }
+            articleList = articleList.map(item => {
+                item.updatedAt = moment(item.updatedAt).format("YYYY年MM月DD日HH:mm")
+                return item
             })
             this.setState({
-                articleList: data
+                articleList
             })
         })
+
     }
 
     linkToArticle = (id) => {
@@ -85,7 +105,7 @@ class SideBar extends Component {
                         {this.state.articleList.map((article, index) => {
                             return (
                                 <li key={index} onClick={() => {
-                                    this.linkToArticle(article.id)
+                                    this.linkToArticle(article.order)
                                 }} style={{ cursor: 'pointer' }}>
                                     <Avatar size={60} shape={"square"} className="avatar"
                                         src={article.img} />

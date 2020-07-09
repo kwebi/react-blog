@@ -8,7 +8,7 @@ const { Footer } = Layout;
 class WebFooter extends Component {
     render() {
         return (
-            <Footer className="home-footer"></Footer>
+            <Footer className="home-footer">博客开源仓库:<a href="https://github.com/kwebi/react-blog">https://github.com/kwebi/react-blog</a></Footer>
         );
     }
 }

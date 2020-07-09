@@ -12,7 +12,7 @@ class Outline extends Component {
                 </div>
                 <div className="outline-main">
                     <div className="outline-title">
-                        <Link className="outline-title" to={`/article/${this.props.id}`}>{this.props.title}</Link>
+                        <Link className="outline-title" to={`/article/${this.props.order}`}>{this.props.title}</Link>
                     </div>
                     <div className="entry-meta">
                         <ul>
