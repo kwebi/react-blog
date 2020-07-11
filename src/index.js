@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import App from "./App";
 import './index.less'
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import { mainRoutes, otherRoutes } from "./routes";
 import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider } from 'antd'

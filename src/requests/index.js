@@ -2,14 +2,12 @@ import axios from 'axios'
 import { message } from 'antd'
 import { getToken } from '../utils/stroage'
 
-const isDev = process.env.NODE_ENV === 'development'
-
 const service = axios.create({
-    baseURL: isDev ? 'http://localhost:6543' : 'http://rap2.taobao.org:38080/app/mock/254197'
+    baseURL: 'http://localhost:6543'
 })
 
 const loginService = axios.create({
-    baseURL: isDev ? 'http://localhost:6543' : 'http://rap2.taobao.org:38080/app/mock/254197'
+    baseURL:  'http://localhost:6543'
 })
 
 
